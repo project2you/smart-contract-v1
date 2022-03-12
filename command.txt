@@ -6,6 +6,7 @@ npm -v
 
 mkdir incrementer && cd incrementer/
 
+
 npm init --yes
 
 npm install --save web3
@@ -13,6 +14,9 @@ npm install --save solc@0.6.10
 
 npm ls web3
 npm ls solc
+
+ganache-cli
+
 
 node deploy.js
 
