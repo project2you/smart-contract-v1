@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>First DApp</title>
+</head>
+<body>
+  Increment
+  <button id="incr">+</button>
+  <br>
+  Decrement
+  <button id="decr">-</button>
+  <br />
+  <label id="myLabel"></label>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.2.6/dist/web3.min.js"></script>
+
+<script>
+  const web3 = new Web3('http://localhost:8545');
+  const myContractAddress = "0xf7C850Fa7c68399d674E16cc83c15283D42eDcf8"; //paste the address generated during deployment with single quotes;
+  const myAbi = [{"inputs":[],"name":"count","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decr","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"display","outputs":[{"internalType":"int256","name":"","type":"int256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"incr","outputs":[],"stateMutability":"nonpayable","type":"function"}] ;// paste your abi code as it is.
+  const myContract = new web3.eth.Contract(myAbi, myContractAddress);
+
+  const htmlLabel = document.getElementById('myLabel');
+
+  myContract.methods.display().call().then((jsonRpcResult) => {
+    htmlLabel.innerHTML = jsonRpcResult;
+    console.log(jsonRpcResult);
+  });
+
+  $('#incr').click(function () {
+    myContract.methods.incr().send({from:'count'},function () {
+      myContract.methods.display().call((error, result) => { htmlLabel.innerHTML = result; console.log(result) })
+    })
+  });
+
+  $('#decr').click(function () {
+    myContract.methods.decr().send({from:'count'}, function () {
+      myContract.methods.display().call((error, result) => { htmlLabel.innerHTML = result; console.log(result) })
+    })
+  });
+
+</script>
+</html>
+

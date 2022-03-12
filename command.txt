@@ -1,0 +1,26 @@
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt install -y nodejs
+
+node -v
+npm -v
+
+mkdir incrementer && cd incrementer/
+
+npm init --yes
+
+npm install --save web3
+npm install --save solc@0.6.10
+
+npm ls web3
+npm ls solc
+
+node deploy.js
+
+node get.js
+
+node increment.js
+node get.js
+
+node reset.js
+
+
